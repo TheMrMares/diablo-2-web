@@ -6,12 +6,12 @@ That's my unique project and/or idea to create Diablo II in web, with javascript
 
 ## Technology
 
-Im going to use only raw javascript, also without ES6 standard, so it's goign to be a little archaic but we will see what am I able to create. Also there will be no additional libraries or frameworks.
+Im going to use only raw javascript, but with ES6 standard sometimes, so it's going to be a little archaic but we will see what am I able to create. Also there will be no additional libraries or frameworks.
 
 ## Game made with
 
 How I built my game? Here you are: 
 
 * No project templates
-* Raw and simple javascript, no ES6
+* Raw and simple javascript
 * No libraries and any extensions

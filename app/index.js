@@ -11,7 +11,7 @@ import {releaseKey} from 'functions/releaseKey.js';
 import {pushKey} from 'functions/pushKey.js';
 
 //Init
-let game = new Game(60, 60); //Init game obj. with actual/native fps nad modifier
+let game = new Game(60, 60); //Init game obj. with actual/native fps and modifier
 let win = new Window(document.querySelector('#gameCanvas')); //Init window obj that holds canvas and his sizes
 let gameInterval = window.setInterval(gameProcess, 1000/game.aFPS); //Set game loop interval
 
@@ -28,6 +28,8 @@ window.addEventListener('keyup', function(evt){
 
 //Game loop
 function gameProcess(){
+    player.updateCoordinates();
+    player.saveCoordinates();
     win.display.fillStyle ='red';
     win.display.fillRect(0,0,win.w,win.h);
 

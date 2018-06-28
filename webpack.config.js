@@ -36,10 +36,29 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: path.join(__dirname, 'index.ejs'),
             title: appHtmlTitle
+        }),
+        new webpack.LoaderOptionsPlugin({
+			options: {
+				worker: {
+					output: {
+						filename: "hash.worker.js",
+						chunkFilename: "[id].hash.worker.js"
+					}
+				}
+			}
         })
     ],
+    optimization: {
+		occurrenceOrder: true // To keep filename consistent between different modes (for example building only)
+    },
     module: {
         rules: [
+            //WORKER LOADER
+            {
+                test: /\.worker\.js$/,
+                use: { loader: 'worker-loader',
+                        options: { inline: true } }
+            },
             // BABEL
             {
                 test: /\.js$/,

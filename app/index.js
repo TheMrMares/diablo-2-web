@@ -13,6 +13,12 @@ let win = new Window(document.querySelector('#gameCanvas'), false); //Init windo
 let gameInterval = window.setInterval(gameProcess, 1000/game.aFPS); //Set game loop interval
 
 //Workers
+let cWorker = require("worker-loader?name=hash.worker.js!./workers/collision.worker.js");
+let collisionWorker = new cWorker;
+collisionWorker.postMessage(5);
+collisionWorker.onmessage = function(e) {
+	console.log(e.data)
+}
 
 //Objects
 let player = new Player(win.display, 50,50,100,100,0,0, true);

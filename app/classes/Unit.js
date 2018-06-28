@@ -53,6 +53,7 @@ export class Unit {
         this.sx = this.x1;
         this.sy = this.y1;
         let modifier = Math.sqrt( Math.pow(Math.abs(this.x1-tx),2) + Math.pow(Math.abs(this.y1-ty),2) );
+        modifier = modifier/10;
         if(tx < this.x1){ 
             this.vx = -(Math.abs(this.x1-tx)/modifier);
         } else {

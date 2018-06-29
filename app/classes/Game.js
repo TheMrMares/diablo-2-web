@@ -5,7 +5,11 @@ export class Game {
         this.mFPS = nFPS/aFPS;
         this.objects = {
             units: [],
-            obstacles: []
+            obstacles: [],
+            guiElements: {
+                buttons: [],
+                images: []
+            }
         };
     }
     refreshModifier() {

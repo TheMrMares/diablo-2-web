@@ -13,15 +13,20 @@ export class Window {
         this.mx = evt.clientX-rect.left;
         this.my = evt.clientY-rect.top;
     }
-    mouseClick(evt, player){
-        player.moveTo(this.mx,this.my)
-    }
-    pushKey(evt, player){
+    pushKey(evt,state, player){
         this.mouseHold = true;
         console.log(evt.keyCode);
     }
-    releaseKey(evt, player){
+    releaseKey(evt,state, player){
         this.mouseHold = false;
         console.log(evt.keyCode);
+    }
+    mouseClick(evt,state, player){
+        if(state == true){
+            player.moveTo(this.mx,this.my)
+        } else if(state == false){
+            console.log('jestes w menu..');
+        }
+        
     }
 }

@@ -10,4 +10,6 @@ html, body {
 canvas {
     @extend %all-center;
     border: 1px solid $smooth;
+    width: 1200px;
+    height: 900px;
 }

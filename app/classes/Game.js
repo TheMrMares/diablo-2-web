@@ -7,9 +7,11 @@ export class Game {
             players: [],
             monsters: [],
             npcs: [],
-            obstacles: []
+            obstacles: [],
+            guis: []
         };
         this.isStarted = isStarted;
+        this.activeGui = 0;
     }
     refreshModifier() {
         this.mFPS = this.nFPS/this.aFPS;

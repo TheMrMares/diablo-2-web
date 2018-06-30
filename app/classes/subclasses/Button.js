@@ -1,8 +1,23 @@
 import {guiUnit} from './../guiUnit.js';
 
 export class Button extends guiUnit {
-    constructor(x1,y1,w,h, text){
-        super(x1,y1,w,h);
+    constructor(drawground, x1,y1,w,h,text, action = null, visible = true){
+        super(drawground, x1,y1,w,h, visible);
         this.text = text;
+        this.action = action;
+    }
+    drawObject() {
+        if(this.visible == true){
+            return this.drawground.fillRect(this.x1,this.y1,this.w,this.h);
+        } else if(this.visible != true){
+            return;
+        }
+    }
+    drawText(){
+        if(this.visible == true){
+            return this.drawground.fillText(this.text,this.x1+this.w/2,this.y1+this.h/1.25);
+        } else if(this.visible != true){
+            return;
+        }
     }
 }

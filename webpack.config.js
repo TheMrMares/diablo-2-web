@@ -56,8 +56,7 @@ module.exports = {
             //WORKER LOADER
             {
                 test: /\.worker\.js$/,
-                use: { loader: 'worker-loader',
-                        options: { inline: true } }
+                use: { loader: 'worker-loader'}
             },
             // BABEL
             {

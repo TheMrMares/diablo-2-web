@@ -8,7 +8,10 @@ import {Window} from 'classes/Window.js';
 import {Player} from 'classes/subclasses/Player.js';
 //Functions
 import {createImage} from './functions/createImage.js';
-import {createPromise } from './functions/createPromise.js';
+import {createPromise} from './functions/createPromise.js';
+//Workers
+import cWorker from './workers/collision.worker.js'
+let collisionWorker = new cWorker;
 
 //Inits
 let game = new Game(60, 60); //Init game obj. with actual/native fps and modifier
@@ -17,14 +20,11 @@ let gameInterval = window.setInterval(gameProcess, 1000/game.aFPS); //Set game l
 
 //Objects
 let player = new Player(win.display, 50,50,100,100,0,0, true);
+let pplayer = new Player(win.display, 50,50,100,100,0,0, true);
 game.objects.units.push(player);
 
 //Textures
 let gui_menuBackground = createImage(require('./textures/gui/menu-background.png'));
-
-//Workers
-let cWorker = require("worker-loader?name=hash.worker.js!./workers/collision.worker.js");
-let collisionWorker = new cWorker;
 
 //Events indicators
 window.addEventListener('keydown', function(evt){
@@ -36,10 +36,14 @@ window.addEventListener('keyup', function(evt){
 window.addEventListener('mousemove', function(evt){
     win.mouseMove(evt);
 });
-let x = 5;
 window.addEventListener('click', function(evt){
     win.mouseClick(evt,player);
 });
+
+createPromise(collisionWorker).then(function(data){
+    console.log(data);
+});
+collisionWorker.postMessage({obj: JSON.stringify(player), box: JSON.stringify(pplayer)});
 
 //Game loop
 function gameProcess(){

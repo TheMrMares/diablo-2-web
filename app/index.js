@@ -10,18 +10,15 @@ import {Player} from 'classes/subclasses/Player.js';
 import {createImage} from './functions/createImage.js';
 import {createPromise} from './functions/createPromise.js';
 //Workers
-import cWorker from './workers/collision.worker.js'
+import cWorker from './workers/collision.worker.js';
 let collisionWorker = new cWorker;
+import iWorker from './workers/included.worker.js';
+let includedWorker = new iWorker;
 
 //Inits
-let game = new Game(60, 60); //Init game obj. with actual/native fps and modifier
+let game = new Game(60, 60, false); //Init game obj. with actual/native fps and modifier
 let win = new Window(document.querySelector('#gameCanvas'), false); //Init window obj that holds canvas and his sizes
 let gameInterval = window.setInterval(gameProcess, 1000/game.aFPS); //Set game loop interval
-
-//Objects
-let player = new Player(win.display, 50,50,100,100,0,0, true);
-let pplayer = new Player(win.display, 50,50,100,100,0,0, true);
-game.objects.units.push(player);
 
 //Textures
 let gui_menuBackground = createImage(require('./textures/gui/menu-background.png'));
@@ -40,24 +37,30 @@ window.addEventListener('click', function(evt){
     win.mouseClick(evt,player);
 });
 
-createPromise(collisionWorker).then(function(data){
-    console.log(data);
-});
-collisionWorker.postMessage({obj: JSON.stringify(player), box: JSON.stringify(pplayer)});
+//Game objects
+let player = new Player(win.display, 50,50,100,100,0,0, true);
+game.objects.players.push(player);
 
 //Game loop
 function gameProcess(){
-    // Refreshing coordinates
-    game.objects.units.forEach((item,index) => {
-        item.updateCoordinates();
-        item.saveCoordinates();
-    });
-    
-    win.display.fillStyle ='red';
-    win.display.fillRect(0,0,win.w,win.h);
+    //Game started so actions for game...
+    if(game.isStarted == false){
+        // Refreshing coordinates
+        game.objects.players.forEach((item,index) => {
+            item.updateCoordinates();
+            item.saveCoordinates();
+        });
+        win.display.fillStyle ='red';
+        win.display.fillRect(0,0,win.w,win.h);
 
-    win.display.drawImage(gui_menuBackground, 0, 0);
+        win.display.drawImage(gui_menuBackground, 0, 0);
 
-    win.display.fillStyle ='black';
-    player.drawObject();
+        win.display.fillStyle ='black';
+        player.drawObject();
+    // Game not started so actions for menu...
+    } else if(game.isStarted == true){
+
+    }
 }
+
+//Functions

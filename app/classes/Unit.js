@@ -37,7 +37,6 @@ export class Unit {
         this.x1 += this.vx;
         this.y1 += this.vy;
         this.reachTarget();
-        this.reachTarget();
         this.refreshCoordinates();
     }
     drawObject() {

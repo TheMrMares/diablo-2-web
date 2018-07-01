@@ -23,7 +23,6 @@ let gameInterval = window.setInterval(gameProcess, 1000/game.aFPS); //Set game l
 createGuis();
 
 //Workers
-let workers = [];
 import cWorker from './workers/collision.worker.js';
 const collisionWorker = new cWorker;
 import iWorker from './workers/included.worker.js';

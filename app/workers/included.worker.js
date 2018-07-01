@@ -1,8 +1,8 @@
-onmessage = function(e) {
-    let data = e.data;
+onmessage = function(msg) {
+    let data = msg.data
 
-    let x = JSON.parse(data.x);
-    let y = JSON.parse(data.y);
+    let x = data.x
+    let y = data.y
     let box = JSON.parse(data.box);
     let finalState = false;
 
@@ -18,4 +18,4 @@ onmessage = function(e) {
 //});
 
 // ## HERE SEND DATA
-//collisionWorker.postMessage({x: 100, y: 100, box: JSON.stringify(pplayer)});
+//collisionWorker.postMessage({x: 5,y: 10, box: JSON.stringify(pplayer)});

@@ -15,22 +15,23 @@ import {Background} from './classes/subclasses/Background';
 //Functions
 import {createImage} from './functions/createImage.js';
 import {createPromise} from './functions/createPromise.js';
-//Workers
-import cWorker from './workers/collision.worker.js';
-let collisionWorker = new cWorker;
-import iWorker from './workers/included.worker.js';
-let includedWorker = new iWorker;
 
 //Inits
-let game = new Game(60, 60, false); //Init game obj. with actual/native fps and modifier
+let game = new Game(60, 60, true); //Init game obj. with actual/native fps and modifier
 let win = new Window(document.querySelector('#gameCanvas'), false); //Init window obj that holds canvas and his sizes
 let gameInterval = window.setInterval(gameProcess, 1000/game.aFPS); //Set game loop interval
 createGuis();
-console.log(game.objects.guis);
+
+//Workers
+let workers = [];
+import cWorker from './workers/collision.worker.js';
+const collisionWorker = new cWorker;
+import iWorker from './workers/included.worker.js';
+const includedWorker = new iWorker;
 
 //Events indicators
 window.addEventListener('mousemove', function(evt){
-    win.mouseMove(evt);
+    win.mouseMove(evt,game);
 });
 window.addEventListener('keydown', function(evt){
     win.pushKey(evt,game.isStarted, player);
@@ -39,19 +40,19 @@ window.addEventListener('keyup', function(evt){
     win.releaseKey(evt,game.isStarted, player);
 });
 window.addEventListener('click', function(evt){
-    win.mouseClick(evt,game.isStarted,player);
+    win.mouseClick(evt,game,player);
 });
 
 //Game objects
 let player = new Player(win.display, 50,50,100,100,0,0, true);
 game.objects.players.push(player);
-let button = new Button(win.display, 100,100,300,50,'Hello', true);
 
 //Game loop
 function gameProcess(){
     //Game not started so actions for menu...
     if(game.isStarted == false){
-        game.objects.guis[game.activeGui].objects.buttons.forEach((item, index) =>{
+        game.objects.guiTemplates[game.activeGui].objects.background.drawObject();
+        game.objects.guiTemplates[game.activeGui].objects.buttons.forEach((item, index) =>{
             item.drawObject();
             item.drawText();
         });

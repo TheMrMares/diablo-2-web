@@ -1,5 +1,5 @@
-onmessage = function(e) {
-    let data = e.data;
+onmessage = function(msg) {
+    let data = msg.data;
 
     let obj = JSON.parse(data.obj);
     let box = JSON.parse(data.box);

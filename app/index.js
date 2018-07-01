@@ -17,7 +17,7 @@ import {createImage} from './functions/createImage.js';
 import {createPromise} from './functions/createPromise.js';
 
 //Inits
-let game = new Game(60, 60, true); //Init game obj. with actual/native fps and modifier
+let game = new Game(60, 60, false); //Init game obj. with actual/native fps and modifier
 let win = new Window(document.querySelector('#gameCanvas'), false); //Init window obj that holds canvas and his sizes
 let gameInterval = window.setInterval(gameProcess, 1000/game.aFPS); //Set game loop interval
 createGuis();

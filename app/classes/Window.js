@@ -1,12 +1,12 @@
 export class Window {
-    constructor(canvas, mouseHold = false){
+    constructor(canvas, keyHold = false){
         this.canvas = canvas;
         this.display = canvas.getContext('2d');
         this.w = canvas.getAttribute('width');
         this.h = canvas.getAttribute('height');
         this.mx = null;
         this.my = null;
-        this.mouseHold = mouseHold;
+        this.keyHold = keyHold;
     }
     mouseMove(evt){
         let rect = this.canvas.getBoundingClientRect();
@@ -14,11 +14,11 @@ export class Window {
         this.my = evt.clientY-rect.top;
     }
     pushKey(evt,state, player){
-        this.mouseHold = true;
+        this.keyHold = true;
         console.log(evt.keyCode);
     }
     releaseKey(evt,state, player){
-        this.mouseHold = false;
+        this.keyHold = false;
         console.log(evt.keyCode);
     }
     mouseClick(evt,state, player){

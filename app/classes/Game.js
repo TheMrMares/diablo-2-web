@@ -8,7 +8,7 @@ export class Game {
             monsters: [],
             npcs: [],
             obstacles: [],
-            guis: []
+            guiTemplates: []
         };
         this.isStarted = isStarted;
         this.activeGui = 0;

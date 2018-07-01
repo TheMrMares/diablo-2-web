@@ -11,6 +11,7 @@ import {guiTemplate} from 'classes/guiTemplate.js';
 //Subclasses
 import {Player} from 'classes/subclasses/Player.js';
 import {Button} from 'classes/subclasses/Button.js';
+import {Background} from './classes/subclasses/Background';
 //Functions
 import {createImage} from './functions/createImage.js';
 import {createPromise} from './functions/createPromise.js';
@@ -72,17 +73,17 @@ function gameProcess(){
 }
 
 //Functions
+//CREATING GUIS
 function createGuis() {
-    game.objects.guis.push(
-        new guiTemplate(win.display, 'main-menu', [
-            new Button(win.display, 100,100,300,50,'Hello', true),
-            new Button(win.display, 100,400,300,50,'Hello2', true)
-        ])
-    );
-    game.objects.guis.push(
-        new guiTemplate(win.display, 'character-menu', [
-            new Button(win.display, 100,100,300,50,'Hello', true),
-            new Button(win.display, 100,400,300,50,'Hello2', true)
+    game.objects.guiTemplates.push(
+        new guiTemplate(
+            win.display, //where draw
+            'main-menu',   //name
+        new Background(win.display, 0, 0, 800, 600, gui_menuBackground, true) //bckg obj
+        ,[
+            new Button(win.display, 100,100,300,50,'Hello', null, true), //add all buttons
+            new Button(win.display, 100,200,300,50,'Hello2', null, true),
+            new Button(win.display, 100,300,300,50,'Hello2', null, true)
         ])
     );
 }

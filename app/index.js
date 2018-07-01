@@ -15,35 +15,22 @@ import {Background} from './classes/subclasses/Background';
 //Functions
 import {createImage} from './functions/createImage.js';
 import {createPromise} from './functions/createPromise.js';
+//Workers
+import cWorker from './workers/collision.worker.js';
+let collisionWorker = new cWorker;
+import iWorker from './workers/included.worker.js';
+let includedWorker = new iWorker;
 
 //Inits
 let game = new Game(60, 60, false); //Init game obj. with actual/native fps and modifier
 let win = new Window(document.querySelector('#gameCanvas'), false); //Init window obj that holds canvas and his sizes
 let gameInterval = window.setInterval(gameProcess, 1000/game.aFPS); //Set game loop interval
 createGuis();
-
-//Workers
-let workers = [];
-import cWorker from './workers/collision.worker.js';
-const collisionWorker = new cWorker;
-import iWorker from './workers/included.worker.js';
-const includedWorker = new iWorker;
-//Push created workers to add handlers for them
-workers.push(collisionWorker,includedWorker);
-workers.forEach((item,index)=>{
-    item.onmessage = function(msg){
-        const {id, payload} = msg.data
-        const resolve = game.globals.resolves[id];
-        const reject = game.globals.rejects[id];
-        resolve(payload);
-        delete game.globals.resolves[id];
-        delete game.globals.rejects[id];
-    }
-});
+console.log(game.objects.guis);
 
 //Events indicators
 window.addEventListener('mousemove', function(evt){
-    win.mouseMove(evt,game);
+    win.mouseMove(evt);
 });
 window.addEventListener('keydown', function(evt){
     win.pushKey(evt,game.isStarted, player);
@@ -52,20 +39,19 @@ window.addEventListener('keyup', function(evt){
     win.releaseKey(evt,game.isStarted, player);
 });
 window.addEventListener('click', function(evt){
-    win.mouseClick(evt,game,player,createPromise,includedWorker);
+    win.mouseClick(evt,game.isStarted,player);
 });
 
 //Game objects
 let player = new Player(win.display, 50,50,100,100,0,0, true);
 game.objects.players.push(player);
+let button = new Button(win.display, 100,100,300,50,'Hello', true);
 
 //Game loop
 function gameProcess(){
-    console.log(game.globals.workerID);
     //Game not started so actions for menu...
     if(game.isStarted == false){
-        game.objects.guiTemplates[game.activeGui].objects.background.drawObject();
-        game.objects.guiTemplates[game.activeGui].objects.buttons.forEach((item, index) =>{
+        game.objects.guis[game.activeGui].objects.buttons.forEach((item, index) =>{
             item.drawObject();
             item.drawText();
         });

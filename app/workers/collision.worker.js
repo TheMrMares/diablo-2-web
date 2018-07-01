@@ -1,6 +1,5 @@
-onmessage = function(msg) {
-    const {id, payload} = msg.data;
-    let data = payload;
+onmessage = function(e) {
+    let data = e.data;
 
     let obj = JSON.parse(data.obj);
     let box = JSON.parse(data.box);
@@ -24,10 +23,13 @@ onmessage = function(msg) {
             finalState = true;
         }
     }
-    postMessage({id: id, payload: finalState});
+    postMessage(finalState);
 }
 
 // ## HERE ADD PROMISE WITH WORKER EVERYTIME WHEN YOU WANT WAIT FOR DATA
-//createPromise({obj: JSON.stringify(player), box: JSON.stringify(pplayer)}, includedWorker, game).then(function(res){
-    //console.log(res);
+//createPromise(collisionWorker).then(function(data){
+//    console.log(data);
 //});
+
+// ## HERE SEND DATA
+//collisionWorker.postMessage({obj: JSON.stringify(player), box: JSON.stringify(pplayer)});

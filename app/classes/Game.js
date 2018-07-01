@@ -12,11 +12,6 @@ export class Game {
         };
         this.isStarted = isStarted;
         this.activeGui = 0;
-        this.globals = {
-            workerID: 0,
-            resolves: {},
-            rejects: {}
-        }
     }
     refreshModifier() {
         this.mFPS = this.nFPS/this.aFPS;

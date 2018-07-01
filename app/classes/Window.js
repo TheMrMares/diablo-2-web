@@ -8,22 +8,10 @@ export class Window {
         this.my = null;
         this.keyHold = keyHold;
     }
-    mouseMove(evt,game){
+    mouseMove(evt){
         let rect = this.canvas.getBoundingClientRect();
         this.mx = evt.clientX-rect.left;
         this.my = evt.clientY-rect.top;
-
-        if(game.isStarted == true){
-            
-        } else if(game.isStarted == false){
-
-            //move on buttons
-            game.objects.guiTemplates[game.activeGui].objects.buttons.forEach((item,index)=>{
-                if((this.mx >= item.x1 && this.mx <= item.x2) && (this.my >= item.y1 && this.my <= item.y2)){
-                    item.x1 = item.x1-1;
-                }
-            });
-        }
     }
     pushKey(evt,state, player){
         this.keyHold = true;
@@ -33,21 +21,11 @@ export class Window {
         this.keyHold = false;
         console.log(evt.keyCode);
     }
-    mouseClick(evt,game,player,createPromise,includedWorker){
-
-        if(game.isStarted == true){
+    mouseClick(evt,state, player){
+        if(state == true){
             player.moveTo(this.mx,this.my)
-        } else if(game.isStarted == false){
-
-            //click buttons
-            game.objects.guiTemplates[game.activeGui].objects.buttons.forEach((item,index)=>{
-                /*if((this.mx >= item.x1 && this.mx <= item.x2) && (this.my >= item.y1 && this.my <= item.y2)){
-                    item.x1 = item.x1-10;
-                }*/
-                createPromise({x: this.mx ,y:this.my, box:JSON.stringify(item)}, includedWorker, game).then(function(res){
-                    console.log(res);
-                });
-            });
+        } else if(state == false){
+            console.log('jestes w menu..');
         }
         
     }
